@@ -1,0 +1,42 @@
+<div class="grid grid-cols-3 gap-6">
+  <!-- Revenue vs Costs Chart -->
+  <div class="col-span-2">
+    <p-card header="Revenue vs Costs" subheader="Last 6 months performance" styleClass="h-full">
+      <p-chart
+        type="bar"
+        [data]="revenueCostChartData"
+        [options]="revenueCostChartOptions"
+        styleClass="w-full h-[300px]"
+      ></p-chart>
+      <div class="flex justify-center gap-4 mt-4">
+        <div class="flex items-center">
+          <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+          <span class="text-sm">Revenue</span>
+        </div>
+        <div class="flex items-center">
+          <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+          <span class="text-sm">Costs</span>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Purchase Summary Chart -->
+  <div>
+    <p-card header="Purchase Summary" subheader="Quarterly overview" styleClass="h-full">
+      <p-chart
+        type="doughnut"
+        [data]="purchaseSummaryChartData"
+        [options]="purchaseSummaryChartOptions"
+        styleClass="w-full h-[300px]"
+      ></p-chart>
+      <div class="grid grid-cols-2 gap-2 mt-4">
+        <div *ngFor="let item of purchaseSummaryData" class="flex items-center p-2 rounded hover:bg-gray-50">
+          <div class="w-3 h-3 rounded-full mr-2" [ngStyle]="{'background-color': item.color}"></div>
+          <span class="text-sm flex-1">{{item.name}}</span>
+          <span class="text-sm font-medium">{{item.value}}</span>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>
