@@ -1,0 +1,108 @@
+
+:host {
+  display: block;
+min-height: 100vh;
+background:
+  linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+  url('../../../../public/login.jpg') no-repeat center center fixed;
+background-size: cover;
+}
+
+ .p-card {
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+::ng-deep .p-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+::ng-deep .p-card .p-card-header {
+  background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  padding: 1.5rem;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+::ng-deep .p-card .p-card-body {
+  padding: 2rem;
+}
+
+::ng-deep .p-inputtext {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+::ng-deep .p-inputtext:enabled:hover {
+  border-color: #4facfe;
+}
+
+::ng-deep .p-inputtext:enabled:focus {
+  border-color: #4facfe;
+  box-shadow: 0 0 0 0.2rem rgba(79, 172, 254, 0.2);
+  outline: none;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+:host ::ng-deep .p-button {
+  background: linear-gradient(to right, #a6ccee 0%, #d4eeef 100%);
+  border: none;
+  padding: 0.75rem;
+  margin-left: 125px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+
+:host  ::ng-deep .p-button:hover {
+  background: linear-gradient(to right, #3a8fd9 0%, #00d9e6 100%);
+  transform: translateY(-2px);
+}
+
+:host  ::ng-deep .p-button:active {
+  transform: translateY(0);
+}
+
+.mt-2 {
+  text-align: center;
+  color: #666;
+}
+
+.mt-2 a {
+  color: #4facfe;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.mt-2 a:hover {
+  color: #3a8fd9;
+  text-decoration: underline;
+}
+
+@media (max-width: 400px) {
+  ::ng-deep .p-card {
+    width: 90% !important;
+    margin: 0 auto;
+  }
+}

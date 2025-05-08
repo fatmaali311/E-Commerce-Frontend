@@ -1,0 +1,89 @@
+<form [formGroup]="registerForm" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;">
+  <p-card header="Register" [style]="{'width': '420px'}">
+      <div class="field">
+          <label for="firstName">First Name</label>
+          <input type="text" pInputText formControlName="firstName" class="w-full" name="firstName" placeholder="Enter your first name"/>
+          <small class="p-error" style="margin-top: 5px;">
+              {{ registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched) ?
+                  (registerForm.get('firstName')?.errors?.['required'] ? 'First name is required.' :
+                  registerForm.get('firstName')?.errors?.['minlength'] ? 'Minimum 2 characters required.' :
+                  registerForm.get('firstName')?.errors?.['maxlength'] ? 'Maximum 20 characters allowed.' :
+                  registerForm.get('firstName')?.errors?.['pattern'] ? 'Invalid name format.' : '') : '' }}
+          </small>
+      </div>
+
+      <div class="field">
+          <label for="lastName">Last Name</label>
+          <input type="text" pInputText formControlName="lastName" class="w-full" name="lastName" placeholder="Enter your last name"/>
+          <small class="p-error" style="margin-top: 5px;">
+              {{ registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched) ?
+                  (registerForm.get('lastName')?.errors?.['required'] ? 'Last name is required.' :
+                  registerForm.get('lastName')?.errors?.['minlength'] ? 'Minimum 2 characters required.' :
+                  registerForm.get('lastName')?.errors?.['maxlength'] ? 'Maximum 20 characters allowed.' :
+                  registerForm.get('lastName')?.errors?.['pattern'] ? 'Invalid name format.' : '') : '' }}
+          </small>
+      </div>
+
+      <div class="field">
+          <label for="email">Email</label>
+          <input type="text" pInputText formControlName="email" class="w-full" name="email" placeholder="Enter your E-mail"/>
+          <small class="p-error" style="margin-top: 5px;">
+              {{ registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched) ?
+                  (registerForm.get('email')?.errors?.['required'] ? 'Email is required.' :
+                  registerForm.get('email')?.errors?.['email'] ? 'Invalid email format.' : '') : '' }}
+          </small>
+      </div>
+
+      <div class="field phone-field" style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="padding: 0.75rem; background-color: #eee; border: 1px solid #ccc; border-radius: 4px;">+20</span>
+          <input
+            type="text"
+            pInputText
+            formControlName="phone"
+            class="w-full"
+            name="phone"
+            placeholder="Enter your phone number"
+          />
+        </div>
+
+        <small class="p-error" style="margin-top: 5px;">
+          {{ registerForm.get('phone')?.invalid && (registerForm.get('phone')?.dirty || registerForm.get('phone')?.touched) ?
+            (registerForm.get('phone')?.errors?.['required'] ? 'Phone is required.' :
+            registerForm.get('phone')?.errors?.['pattern'] ? 'Phone must start with 1 and be 10 digits.' : '') : '' }}
+        </small>
+
+
+
+      <div class="field">
+          <label for="password">Password</label>
+          <input type="password" pInputText formControlName="password" class="w-full" name="password" placeholder="Enter your password"/>
+          <small class="p-error" style="margin-top: 5px;">
+              {{ registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched) ?
+                  (registerForm.get('password')?.errors?.['required'] ? 'Password is required.' :
+                  registerForm.get('password')?.errors?.['minlength'] ? 'Password must be at least 6 characters.' :
+                  registerForm.get('password')?.errors?.['maxlength'] ? 'Password must be less than 20 characters.' : '') : '' }}
+          </small>
+      </div>
+
+      <div class="field">
+          <label for="confirmPassword">Confirm password</label>
+          <input type="password" pInputText formControlName="confirmPassword" class="w-full" name="confirmPassword" placeholder="Confirm your password"/>
+          <small class="p-error" style="margin-top: 5px;">
+              {{
+                  registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched) ?
+                      (registerForm.get('confirmPassword')?.errors?.['required'] ? 'Confirm Password is required.' : '') :
+                  (registerForm.errors?.['passwordsMismatch'] && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)) ?
+                      'Passwords do not match.' : ''
+              }}
+          </small>
+      </div>
+
+      <div class="mx-auto">
+          <p-button label="Submit" severity="success" styleClass="w-full"></p-button>
+      </div>
+
+      <div class="mt-2 login-link">
+          Already have an account? <a href="/login">Login</a>
+      </div>
+  </p-card>
+</form>

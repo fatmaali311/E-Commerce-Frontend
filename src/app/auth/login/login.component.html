@@ -1,0 +1,28 @@
+<form [formGroup]="loginForm" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;">
+  <p-card header="Login" [style]="{'width': '360px'}">
+      <div class="field">
+          <label for="email">Email</label>
+          <input type="text" pInputText formControlName="email" class="w-full" name="email" placeholder="Enter your E-mail"/>
+          <small class="p-error" style="margin-top: 5px;">
+              {{ loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched) ?
+                  (loginForm.get('email')?.errors?.['required'] ? 'Email is required.' :
+                   loginForm.get('email')?.errors?.['email'] ? 'Invalid email format.' : '') : '' }}
+          </small>
+      </div>
+      <div class="field">
+          <label for="password">Password</label>
+          <input type="password" pInputText formControlName="password" class="w-full" name="password" placeholder="Enter your password"/>
+          <small class="p-error" style="margin-top: 5px;">
+              {{ loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched) ?
+                  (loginForm.get('password')?.errors?.['required'] ? 'Password is required.' :
+                   loginForm.get('password')?.errors?.['minlength'] ? 'Password must be at least 6 characters long.' : '') : '' }}
+          </small>
+      </div>
+      <div class="field">
+          <p-button label="Login" severity="success" styleClass="w-full"/>
+      </div>
+      <div class="mt-2">
+          Not a member? <a href="/register">Register</a>
+      </div>
+  </p-card>
+</form>
