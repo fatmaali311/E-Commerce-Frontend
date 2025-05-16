@@ -11,6 +11,8 @@ import { SellerDashboardComponent } from './dashboard/seller/seller-dashboard/se
 import { ProductsComponent } from './dashboard/seller/products/products.component';
 import { ProfileComponent } from './shared/profile/profile.component';
 import { LogoutComponent } from './shared/logout/logout.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { AboutComponent } from './pages/about/about.component';
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -23,5 +25,8 @@ export const routes: Routes = [
   {path:'seller/dashboard',component:SellerDashboardComponent},
   {path:'seller/products',component:ProductsComponent},
   {path:'setting/profile',component:ProfileComponent},
+  {path: 'landing',component: LandingPageComponent},
+  {path: '**',component: LandingPageComponent},
   {path:'setting/logout',component:LogoutComponent},
+  {path:'about',component:AboutComponent}
 ];
