@@ -1,0 +1,27 @@
+<li>
+  <div
+    class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 cursor-pointer transition-colors duration-200"
+    (click)="toggleDropdown()"
+  >
+    <i class="pi pi-cog"></i>
+    <span>Settings</span>
+    <i class="pi ml-auto transition-transform duration-200" [ngClass]="{'pi-chevron-down': !isOpen, 'pi-chevron-up': isOpen}"></i>
+  </div>
+  <ul
+    *ngIf="isOpen"
+    class="ml-6 mt-1 space-y-1 animate-fadeIn"
+  >
+    <li>
+      <a routerLink="setting/profile" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-200">
+        <i class="pi pi-user"></i>
+        <span>Profile</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="setting/logout" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-200 text-red-400 hover:text-red-300">
+        <i class="pi pi-sign-out"></i>
+        <span>Logout</span>
+      </a>
+    </li>
+  </ul>
+</li>

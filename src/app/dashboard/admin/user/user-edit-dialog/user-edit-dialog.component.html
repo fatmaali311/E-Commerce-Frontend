@@ -1,0 +1,194 @@
+<p-dialog [(visible)]="visible" [style]="{width: '800px'}" header="Edit User" [modal]="true"
+  styleClass="rounded-lg shadow-xl" [closable]="true" [closeOnEscape]="true" (onHide)="hideDialog()">
+
+  <ng-template pTemplate="content">
+    <form [formGroup]="userForm" class="space-y-6">
+      <!-- Profile Header -->
+      <div class="flex items-start space-x-6">
+        <div class="relative">
+          <img [src]="previewImage || userForm.get('profileImage')?.value || 'assets/images/default-avatar.png'" 
+            alt="Profile" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md">
+          
+          <input type="file" (change)="onFileChange($event)" accept="image/*" class="hidden" #fileInput>
+          <button type="button" pButton pRipple 
+            class="absolute -bottom-2 -right-2 p-button-rounded p-button-sm p-button-primary shadow-md"
+            (click)="fileInput.click()">
+            <i class="pi pi-camera"></i>
+          </button>
+        </div>
+        
+        <div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="field">
+            <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+            <input type="text" pInputText id="firstName" formControlName="firstName" class="w-full"
+              [ngClass]="{'p-invalid': userForm.get('firstName')?.invalid && (userForm.get('firstName')?.dirty || userForm.get('firstName')?.touched)}" />
+            <small *ngIf="userForm.get('firstName')?.invalid && (userForm.get('firstName')?.dirty || userForm.get('firstName')?.touched)"
+              class="p-error">First name is required</small>
+          </div>
+
+          <div class="field">
+            <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+            <input type="text" pInputText id="lastName" formControlName="lastName" class="w-full"
+              [ngClass]="{'p-invalid': userForm.get('lastName')?.invalid && (userForm.get('lastName')?.dirty || userForm.get('lastName')?.touched)}" />
+            <small *ngIf="userForm.get('lastName')?.invalid && (userForm.get('lastName')?.dirty || userForm.get('lastName')?.touched)"
+              class="p-error">Last name is required</small>
+          </div>
+
+          <div class="field">
+            <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Role *</label>
+            <p-dropdown id="role" [options]="roles" formControlName="role" placeholder="Select Role"
+              styleClass="w-full" [showClear]="false"></p-dropdown>
+          </div>
+
+          <div class="field">
+            <label for="phoneNumber" class="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+            <input type="text" pInputText id="phoneNumber" formControlName="phoneNumber" class="w-full"
+              [ngClass]="{'p-invalid': userForm.get('phoneNumber')?.invalid && (userForm.get('phoneNumber')?.dirty || userForm.get('phoneNumber')?.touched)}" />
+            <small *ngIf="userForm.get('phoneNumber')?.invalid && (userForm.get('phoneNumber')?.dirty || userForm.get('phoneNumber')?.touched)"
+              class="p-error">Phone number is required</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Info -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-gray-50 rounded-lg p-5">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+            <i class="pi pi-envelope mr-2"></i> Account Details
+          </h3>
+          
+          <div class="space-y-4">
+            <div class="field">
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+              <input type="email" pInputText id="email" formControlName="email" class="w-full"
+                [ngClass]="{'p-invalid': userForm.get('email')?.invalid && (userForm.get('email')?.dirty || userForm.get('email')?.touched)}" />
+              <small *ngIf="userForm.get('email')?.hasError('required')"
+                class="p-error">Email is required</small>
+              <small *ngIf="userForm.get('email')?.hasError('email')"
+                class="p-error">Please enter a valid email</small>
+            </div>
+            
+            <div class="flex items-center space-x-6">
+              <div class="field-checkbox">
+                <p-checkbox [binary]="true" formControlName="isActive" inputId="isActive"></p-checkbox>
+                <label for="isActive" class="ml-2 text-gray-700">Active Account</label>
+              </div>
+              
+              <div class="field-checkbox">
+                <p-checkbox [binary]="true" formControlName="isVerified" inputId="isVerified"></p-checkbox>
+                <label for="isVerified" class="ml-2 text-gray-700">Verified</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Card -->
+        <div class="bg-blue-50 rounded-lg p-5 border border-blue-100">
+          <h3 class="text-lg font-semibold text-blue-800 mb-4 flex items-center">
+            <i class="pi pi-info-circle mr-2"></i> Account Status
+          </h3>
+          
+          <div class="space-y-3 text-blue-700">
+            <p class="flex items-center">
+              <i class="pi pi-calendar mr-2"></i>
+              <span class="font-medium">Created:</span> 
+              <span class="ml-1">{{ userForm.get('_id')?.value ? 'Existing user' : 'New user' }}</span>
+            </p>
+            
+            <p class="flex items-center">
+              <i class="pi pi-clock mr-2"></i>
+              <span class="font-medium">Last Updated:</span> 
+              <span class="ml-1">{{ userForm.get('_id')?.value ? 'Recently' : 'Not applicable' }}</span>
+            </p>
+            
+            <p class="flex items-center">
+              <i class="pi pi-shield mr-2"></i>
+              <span class="font-medium">Permissions:</span> 
+              <span class="ml-1">{{ userForm.get('role')?.value | titlecase }} level</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Addresses Section -->
+      <div class="bg-gray-50 rounded-lg p-5">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+            <i class="pi pi-map-marker mr-2"></i> Addresses
+          </h3>
+          <button pButton pRipple icon="pi pi-plus" label="Add Address" 
+            class="p-button-sm p-button-outlined p-button-secondary"
+            (click)="addNewAddress()"></button>
+        </div>
+        
+        <div *ngIf="addressesFormArray.controls.length === 0" class="text-center py-6">
+          <i class="pi pi-inbox text-3xl text-gray-300 mb-2"></i>
+          <p class="text-gray-500">No addresses added yet</p>
+        </div>
+        
+        <div *ngIf="addressesFormArray.controls.length > 0" class="grid grid-cols-1 gap-4">
+          <div *ngFor="let addressControl of addressesFormArray.controls; let i = index" 
+            class="border rounded-lg p-4 hover:shadow-sm transition-shadow"
+            [class.border-blue-200]="addressControl.get('isDefault')?.value">
+            <ng-container [formGroup]="$any(addressControl)">
+              <div class="flex justify-between items-start mb-3">
+                <div>
+                  <p-dropdown [options]="addressTypes" formControlName="type" placeholder="Select Type"
+                    styleClass="w-40" [showClear]="false"></p-dropdown>
+                </div>
+                
+                <div class="flex space-x-2">
+                  <button pButton pRipple icon="pi pi-trash" 
+                    class="p-button-rounded p-button-text p-button-sm !text-red-500 hover:!bg-red-50"
+                    (click)="removeAddress(i)"></button>
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="field">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Street *</label>
+                  <input pInputText type="text" formControlName="street" class="w-full"
+                    [ngClass]="{'p-invalid': addressControl.get('street')?.invalid && (addressControl.get('street')?.dirty || addressControl.get('street')?.touched)}" />
+                  <small *ngIf="addressControl.get('street')?.invalid"
+                    class="p-error">Street is required</small>
+                </div>
+
+                <div class="field">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                  <input pInputText type="text" formControlName="city" class="w-full"
+                    [ngClass]="{'p-invalid': addressControl.get('city')?.invalid && (addressControl.get('city')?.dirty || addressControl.get('city')?.touched)}" />
+                  <small *ngIf="addressControl.get('city')?.invalid"
+                    class="p-error">City is required</small>
+                </div>
+
+                <div class="field">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Governorate *</label>
+                  <input pInputText type="text" formControlName="governerate" class="w-full"
+                    [ngClass]="{'p-invalid': addressControl.get('governerate')?.invalid && (addressControl.get('governerate')?.dirty || addressControl.get('governerate')?.touched)}" />
+                  <small *ngIf="addressControl.get('governerate')?.invalid"
+                    class="p-error">Governorate is required</small>
+                </div>
+
+                <div class="field-checkbox flex items-center">
+                  <p-checkbox [binary]="true" formControlName="isDefault" inputId="isDefault{{i}}"
+                    (onChange)="onDefaultAddressChange(i)"></p-checkbox>
+                  <label for="isDefault{{i}}" class="ml-2 text-gray-700">Set as default address</label>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" 
+      class="p-button-outlined p-button-secondary" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save Changes" icon="pi pi-check" 
+      class="ml-2" (click)="saveUser()" [disabled]="userForm.invalid || loading">
+      <i class="pi pi-spinner pi-spin mr-2" *ngIf="loading"></i>
+      Save Changes
+    </button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,40 @@
+<div class="fixed inset-y-0 left-0 z-30 w-64 bg-gray-800 text-white shadow-xl flex flex-col">
+  <div class="w-64 bg-gray-800 text-white flex flex-col overflow-y-auto">
+    <!-- User Profile Section -->
+    <div class="flex items-center gap-4 p-4 border-b border-gray-700 hover:bg-gray-700 transition-colors duration-200">
+      <p-avatar
+        [image]="userData.avatar"
+        shape="circle"
+        size="large"
+        styleClass="border-2 border-white"
+      ></p-avatar>
+      <div>
+        <p class="text-lg font-semibold">{{userData.name}}</p>
+        <p class="text-sm text-gray-300">{{userData.role}}</p>
+      </div>
+    </div>
+
+    <!-- Navigation Menu -->
+  <ul class="flex-1 p-4 space-y-1 overflow-y-auto">
+    <li *ngFor="let item of navigationMenu; index as i">
+      <a
+        [routerLink]="item.route"
+        routerLinkActive="bg-gray-700 text-white"
+        class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-200"
+      >
+        <i [class]="item.icon"></i>
+        <span>{{ item.name }}</span>
+      </a>
+    </li>
+
+      <!-- Other menu items -->
+       
+      <app-setting></app-setting>
+    </ul>
+
+  </div>
+</div>
+
+
+
+

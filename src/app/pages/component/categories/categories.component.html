@@ -1,0 +1,39 @@
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 mb-2">Shop by Category</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Discover our curated collections
+      </p>
+    </div>
+
+    <p-carousel [value]="categories" [numVisible]="4" [numScroll]="1" [circular]="true"
+      [responsiveOptions]="responsiveOptions" styleClass="modern-carousel">
+      <ng-template let-category pTemplate="item">
+        <a [routerLink]="['/categories', category._id, 'products']"
+        class="category-card group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all
+        duration-300 m-2 h-full flex flex-col">
+         View Products
+        <div class="image-container h-48 overflow-hidden">
+          <img [src]="category.image" alt="{{ category.name }}"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        </div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        </div>
+        <div class="p-4 flex-grow flex flex-col">
+          <h3 class="font-bold text-gray-800 text-lg mb-2">
+            {{ category.name }}
+          </h3>
+          <div class="mt-auto">
+            <span
+              class="inline-block text-sm font-medium text-indigo-600 group-hover:text-indigo-800 transition-colors duration-200">
+              Explore Collection →
+            </span>
+          </div>
+        </div>
+        </a>
+      </ng-template>
+    </p-carousel>
+  </div>
+</section>
