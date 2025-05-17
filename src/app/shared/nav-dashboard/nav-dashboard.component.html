@@ -1,19 +1,46 @@
-<div class="flex items-center justify-between p-4 bg-white shadow-sm relative z-10">
+<div class="flex items-center justify-between p-4 bg-white shadow-sm relative z-10" >
   <div class="flex items-center gap-2">
-    <h1 class="text-xl font-bold text-gray-800">Dashboard</h1>
+    <h1 class="text-xl font-bold text-gray-800">Inventory Title</h1>
+    @if (isLogin) {
+       <ul>
+    <li class=""><a routerLink="/" class="text-white-500 font-semibold text-xl">Home</a></li>
+    </ul>
+    }
+
   </div>
 
-  <div class="flex items-center gap-4 relative">
+  <div class="flex items-center gap-10 relative">
     <span class="p-input-icon-left">
       <input type="text" pInputText placeholder="Search..." class="w-48" />
     </span>
-    <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded p-button-text p-button-plain relative"></button>
+    <!-- <button pButton pRipple icon="pi pi-envelope" class="p-button-rounded p-button-text p-button-plain relative"></button>
     <button pButton pRipple icon="pi pi-bell" class="p-button-rounded p-button-text p-button-plain relative"></button>
     <p-avatar
       image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
       shape="circle"
       size="normal"
       styleClass="cursor-pointer border-2 border-white shadow"
-    ></p-avatar>
+    ></p-avatar> -->
+    @if (!isLogin) {
+      <ul class="flex items-center gap-4">
+      <li><a routerLink="/login" class="text-white-500 font-semibold text-xl">Login</a></li>
+       <li><a routerLink="/register" class="text-white-500 font-semibold text-xl">Register</a></li>
+
+    </ul>
+    }@else {
+      <ul class="flex items-center gap-4">
+      <li><p-avatar
+      image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+      shape="circle"
+      size="normal"
+      styleClass="cursor-pointer border-2 border-white shadow"
+    ></p-avatar></li>
+       <li><button class="text-white-500 font-semibold text-xl" (click)="logOut()">logout</button></li>
+
+    </ul>
+    }
+
   </div>
 </div>
+
+<router-outlet></router-outlet>

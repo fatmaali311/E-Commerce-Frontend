@@ -1,5 +1,9 @@
-<form [formGroup]="registerForm" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;">
+<form [formGroup]="registerForm" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;" (ngSubmit)="register()">
   <p-card header="Register" [style]="{'width': '420px'}">
+    @if (apiError) {
+<small class="p-error" style="margin-top: 5px;">
+              {{ apiError }}
+          </small>    }
       <div class="field">
           <label for="firstName">First Name</label>
           <input type="text" pInputText formControlName="firstName" class="w-full" name="firstName" placeholder="Enter your first name"/>
@@ -34,25 +38,26 @@
           </small>
       </div>
 
-      <div class="field phone-field" style="display: flex; align-items: center; gap: 0.5rem;">
-          <span style="padding: 0.75rem; background-color: #eee; border: 1px solid #ccc; border-radius: 4px;">+20</span>
-          <input
-            type="text"
-            pInputText
-            formControlName="phone"
-            class="w-full"
-            name="phone"
-            placeholder="Enter your phone number"
-          />
-        </div>
+<div class="field phone-field" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+  <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+    <span style="padding: 0.5rem; background-color: #eee; border: 1px solid #ccc; border-radius: 4px;">+20</span>
+    <input
+      type="text"
+      pInputText
+      formControlName="phoneNumber"
+      class="w-full"
+      name="phoneNumber"
+      placeholder="Enter your phone number"
+      style="margin: 0; padding: 0.7rem;"
+    />
+  </div>
 
-        <small class="p-error" style="margin-top: 5px;">
-          {{ registerForm.get('phone')?.invalid && (registerForm.get('phone')?.dirty || registerForm.get('phone')?.touched) ?
-            (registerForm.get('phone')?.errors?.['required'] ? 'Phone is required.' :
-            registerForm.get('phone')?.errors?.['pattern'] ? 'Phone must start with 1 and be 10 digits.' : '') : '' }}
-        </small>
-
-
+  <small class="p-error" style="margin: 0; line-height: 1;">
+    {{ registerForm.get('phoneNumber')?.invalid && (registerForm.get('phoneNumber')?.dirty || registerForm.get('phoneNumber')?.touched) ?
+      (registerForm.get('phoneNumber')?.errors?.['required'] ? 'Phone is required.' :
+      registerForm.get('phoneNumber')?.errors?.['pattern'] ? 'Phone must start with 01 and be 10 digits.' : '') : '' }}
+  </small>
+</div>
 
       <div class="field">
           <label for="password">Password</label>
@@ -79,7 +84,7 @@
       </div>
 
       <div class="mx-auto">
-          <p-button label="Submit" severity="success" styleClass="w-full"></p-button>
+          <p-button label="Submit" severity="success" styleClass="w-full" [type]="'submit'"></p-button>
       </div>
 
       <div class="mt-2 login-link">

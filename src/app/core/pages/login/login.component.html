@@ -1,0 +1,39 @@
+<form [formGroup]="loginForm" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;" (ngSubmit)="login()">
+  <p-card header="Register" [style]="{'width': '420px'}">
+    @if (apiError) {
+<small class="p-error" style="margin-top: 5px;">
+              {{ apiError }}
+          </small>    }
+
+      <div class="field">
+          <label for="email">Email</label>
+          <input type="text" pInputText formControlName="email" class="w-full" name="email" placeholder="Enter your E-mail" style="width: 100%; height: 40px;"/>
+          <small class="p-error" style="margin-top: 5px;">
+              {{ loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched) ?
+                  (loginForm.get('email')?.errors?.['required'] ? 'Email is required.' :
+                  loginForm.get('email')?.errors?.['email'] ? 'Invalid email format.' : '') : '' }}
+          </small>
+      </div>
+
+
+      <div class="field">
+          <label for="password">Password</label>
+          <input type="password" pInputText formControlName="password" class="w-full" name="password" placeholder="Enter your password" style="width: 100%; height: 40px;"/>
+          <small class="p-error" style="margin-top: 5px;">
+              {{ loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched) ?
+                  (loginForm.get('password')?.errors?.['required'] ? 'Password is required.' :
+                  loginForm.get('password')?.errors?.['minlength'] ? 'Password must be at least 6 characters.' :
+                  loginForm.get('password')?.errors?.['maxlength'] ? 'Password must be less than 20 characters.' : '') : '' }}
+          </small>
+      </div>
+
+
+      <div class="mx-auto">
+          <p-button label="Login" severity="success" styleClass="w-full" [type]="'submit'"></p-button>
+      </div>
+
+      <div class="mt-2 login-link">
+          Not a member? <a href="/register">Login</a>
+      </div>
+  </p-card>
+</form> 
