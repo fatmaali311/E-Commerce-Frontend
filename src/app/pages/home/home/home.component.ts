@@ -42,7 +42,7 @@ interface Testimonial {
 @Component({
   selector: 'app-home',
   imports: [FormsModule,
-    CarouselModule,
+   
     MenubarModule,
     ButtonModule,
     BadgeModule,

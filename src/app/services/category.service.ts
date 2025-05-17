@@ -10,7 +10,7 @@ export class CategoryService {
 
    private _httpClient = inject(HttpClient);
   private apiUrl = 'http://127.0.0.1:3000/api/admin/categories';
-  private token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjExNTJmNmU0OGE4NTFmODQzNDI3OCIsImlhdCI6MTc0NzQyOTkzOSwiZXhwIjoxNzQ3NDM3MTM5fQ.VfkH8rwILrZX2bndE23rV1eAZoIciKiv98ABpIEesUI";
+  private token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjExNTJmNmU0OGE4NTFmODQzNDI3OCIsImlhdCI6MTc0NzQ0MzQ2OSwiZXhwIjoxNzQ3NDUwNjY5fQ.jc_LL04QTCUb74vGtZBIF8I2nzFMJ9ILeJV_7BBAziE";
 
    private headers = new HttpHeaders({
     Authorization: `Bearer ${this.token}`,
