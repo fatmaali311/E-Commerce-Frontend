@@ -1,0 +1,93 @@
+<p-dialog [(visible)]="visible" [style]="{width: '750px'}" header="User Details" [modal]="true" styleClass="p-fluid"
+  [closable]="true" [closeOnEscape]="true" (onHide)="hideDialog()">
+
+  <ng-template pTemplate="content">
+    <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Profile Image -->
+      <div class="col-span-2 flex justify-center mb-4">
+        <img [src]="user?.profileImage || 'https://placehold.co/200x200.png'" alt="Profile Image"
+          class="w-32 h-32 rounded-full object-cover border-2 border-gray-200">
+      </div>
+
+      <!-- Basic User Information -->
+      <div class="field col-span-1">
+        <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+        <p class="p-2 border rounded bg-gray-50">{{ user?.firstName }}</p>
+      </div>
+
+      <div class="field col-span-1">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+        <p class="p-2 border rounded bg-gray-50">{{ user?.lastName }}</p>
+      </div>
+
+      <div class="field col-span-2">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <p class="p-2 border rounded bg-gray-50">{{ user?.email }}</p>
+      </div>
+
+      <div class="field col-span-1">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+        <p class="p-2 border rounded bg-gray-50">{{ user?.phoneNumber }}</p>
+      </div>
+
+      <div class="field col-span-1">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+        <p class="p-2 border rounded bg-gray-50">{{ user?.role | titlecase }}</p>
+      </div>
+
+      <div class="field col-span-1">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+        <p-tag [severity]="getSeverity(user?.isActive || false)"
+          [value]="user?.isActive ? 'Active' : 'Inactive'"></p-tag>
+      </div>
+
+      <div class="field col-span-1">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Verified</label>
+        <p-tag [severity]="user?.isVerified ? 'success' : 'danger'"
+          [value]="user?.isVerified ? 'Verified' : 'Not Verified'"></p-tag>
+      </div>
+
+      <!-- Address Section -->
+      <div class="col-span-2 mt-4">
+        <div class="flex justify-between items-center mb-2">
+          <h3 class="text-lg font-medium text-gray-900">Addresses</h3>
+        </div>
+
+        <div *ngIf="user?.addresses?.length === 0" class="text-center py-4 text-gray-500">
+          No addresses found
+        </div>
+
+        <div *ngFor="let address of user?.addresses" class="mb-4 p-4 border rounded-lg">
+          <div class="flex justify-between items-center mb-2">
+            <h4 class="font-medium text-gray-800">
+              {{ address.type === 'billing' ? 'Billing Address' : 'Shipping Address' }}
+              <span *ngIf="address.isDefault"
+                class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Default</span>
+            </h4>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="field">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Street</label>
+              <p class="p-2 border rounded bg-gray-50">{{ address.street }}</p>
+            </div>
+
+            <div class="field">
+              <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+              <p class="p-2 border rounded bg-gray-50">{{ address.city }}</p>
+            </div>
+
+            <div class="field">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Governorate</label>
+              <p class="p-2 border rounded bg-gray-50">{{ address.governerate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Close" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+  </ng-template>
+</p-dialog>

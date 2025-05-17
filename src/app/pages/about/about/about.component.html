@@ -1,0 +1,91 @@
+<!-- Hero Section -->
+<section class="relative bg-indigo-600 text-white py-20">
+  <div class="container mx-auto px-4 text-center">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4">Our Story</h1>
+    <p class="text-xl max-w-3xl mx-auto">Discover the journey that shaped us into the trusted e-commerce platform we are today.</p>
+  </div>
+</section>
+
+<!-- Mission Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center gap-12">
+      <div class="md:w-1/2">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
+             alt="Our Team" class="rounded-xl shadow-lg w-full">
+      </div>
+      <div class="md:w-1/2">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">Our Mission</h2>
+        <p class="text-gray-600 mb-6">
+          At Nexus, we're committed to revolutionizing online shopping by providing exceptional products, 
+          seamless experiences, and unparalleled customer service.
+        </p>
+        <p class="text-gray-600 mb-8">
+          Founded in 2018, we've grown from a small startup to a global e-commerce leader, 
+          serving millions of satisfied customers worldwide.
+        </p>
+        <button pButton pRipple label="Learn More" class="p-button-rounded"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Journey</h2>
+    <p-timeline [value]="milestones" align="alternate" class="max-w-4xl mx-auto">
+      <ng-template pTemplate="content" let-event>
+        <p-card [header]="event.year" [subheader]="event.title" class="shadow-sm">
+          <p class="m-0">{{event.description}}</p>
+        </p-card>
+      </ng-template>
+    </p-timeline>
+  </div>
+</section>
+
+<!-- Team Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Meet Our Team</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <p-card *ngFor="let member of teamMembers" [header]="member.name" [subheader]="member.role" class="shadow-sm hover:shadow-md transition-all">
+        <ng-template pTemplate="header">
+          <img [src]="member.image" [alt]="member.name" class="w-full h-64 object-cover">
+        </ng-template>
+        <p>{{member.bio}}</p>
+        <ng-template pTemplate="footer">
+          <div class="flex gap-2">
+            <button pButton pRipple icon="pi pi-linkedin" class="p-button-rounded p-button-text"></button>
+            <button pButton pRipple icon="pi pi-twitter" class="p-button-rounded p-button-text"></button>
+            <button pButton pRipple icon="pi pi-github" class="p-button-rounded p-button-text"></button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+</section>
+
+<!-- Values Section -->
+<section class="py-16 bg-indigo-600 text-white">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-12">Our Core Values</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="p-6">
+        <i class="pi pi-heart text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Customer First</h3>
+        <p>We prioritize our customers' needs above all else</p>
+      </div>
+      <div class="p-6">
+        <i class="pi pi-shield text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Integrity</h3>
+        <p>Honesty and transparency in all we do</p>
+      </div>
+      <div class="p-6">
+        <i class="pi pi-bolt text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Innovation</h3>
+        <p>Constantly pushing boundaries to improve</p>
+      </div>
+    </div>
+  </div>
+</section>

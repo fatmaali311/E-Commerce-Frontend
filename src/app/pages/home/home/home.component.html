@@ -1,0 +1,235 @@
+<!-- app.component.html -->
+<div class="nexus-ecommerce">
+ 
+<app-header></app-header>
+  <!-- Hero Section -->
+  <section class="relative h-screen flex items-center overflow-hidden">
+    <img src="https://images.pexels.com/photos/4173117/pexels-photo-4173117.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+         alt="Hero Image" class="absolute inset-0 w-full h-full object-cover z-0 opacity-20">
+
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    <div class="container mx-auto px-4 relative z-10 text-white">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">Discover Your Perfect Style</h1>
+        <p class="text-lg md:text-xl mb-8">Explore our curated collection of premium products designed to elevate your everyday life.</p>
+        <div class="flex space-x-4">
+          <button pButton type="button" label="Shop Now" class="p-button-rounded bg-indigo-600 hover:bg-indigo-700"></button>
+          <button pButton type="button" label="Learn More" class="p-button-rounded p-button-outlined text-white border-white hover:bg-white hover:text-indigo-600"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">Shop by Category</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Browse through our diverse range of categories to find exactly what you're looking for.</p>
+      </div>
+
+      <p-carousel [value]="categories" [numVisible]="4" [numScroll]="1" [circular]="true"
+                 [responsiveOptions]="responsiveOptions" styleClass="custom-carousel">
+        <ng-template let-category pTemplate="item">
+          <div class="category-card bg-gray-50 rounded-xl p-6 text-center hover:bg-indigo-50 transition duration-300 m-2">
+            <div class="category-icon bg-indigo-100 text-indigo-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="{{category.icon}} text-2xl"></i>
+            </div>
+            <h3 class="font-semibold text-gray-800 mb-1">{{category.name}}</h3>
+            <p class="text-sm text-gray-500">{{category.items}}+ items</p>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center mb-12">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-800 mb-2">Featured Products</h2>
+          <p class="text-gray-600">Our most popular products this season</p>
+        </div>
+        <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">View All <i class="pi pi-arrow-right ml-1"></i></a>
+      </div>
+
+      <p-carousel [value]="products" [numVisible]="4" [numScroll]="1" [circular]="true"
+                 [responsiveOptions]="responsiveOptions" styleClass="custom-product-carousel">
+        <ng-template let-product pTemplate="item">
+          <div class="product-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 m-2">
+            <div class="relative">
+              <img [src]="product.image" [alt]="product.name" class="w-full h-64 object-cover">
+              <div class="absolute top-3 right-3 flex flex-col space-y-2">
+                <button pButton class="p-button-rounded p-button-text text-gray-600 bg-white w-8 h-8 flex items-center justify-center"
+                        [ngClass]="{'text-red-500': product.isFavorite}"
+                        icon="pi pi-heart" (click)="toggleWishlist(product, $event)"></button>
+                <button pButton class="p-button-rounded p-button-text text-gray-600 bg-white w-8 h-8 flex items-center justify-center"
+                        icon="pi pi-eye" (click)="viewProduct(product)"></button>
+              </div>
+              <div *ngIf="product.discount" class="absolute bottom-3 left-3 bg-indigo-600 text-white text-xs px-2 py-1 rounded">{{product.discount}}</div>
+              <div *ngIf="product.isNew" class="absolute bottom-3 left-3 bg-indigo-600 text-white text-xs px-2 py-1 rounded">New</div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-semibold text-gray-800">{{product.name}}</h3>
+                <div class="flex items-center">
+                  <p-rating [ngModel]="product.rating" [readonly]="true"  [stars]="5"></p-rating>
+                  <span class="text-gray-600 text-sm ml-1">{{product.rating}}</span>
+                </div>
+              </div>
+              <p class="text-gray-600 text-sm mb-3">{{product.description}}</p>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-indigo-600 font-bold">${{product.price.toFixed(2)}}</span>
+                  <span *ngIf="product.originalPrice" class="text-gray-400 text-sm line-through ml-2">${{product.originalPrice.toFixed(2)}}</span>
+                </div>
+                <button pButton class="p-button-rounded p-button-text bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white w-8 h-8 flex items-center justify-center"
+                        icon="pi pi-shopping-cart" (click)="addToCart(product, $event)"></button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </section>
+
+  <!-- Banner Section -->
+  <section class="py-16 bg-indigo-600 text-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <div class="md:w-1/2 mb-8 md:mb-0">
+          <h2 class="text-3xl font-bold mb-4">Summer Sale!</h2>
+          <p class="text-lg mb-6">Up to 50% off on selected items. Limited time offer. Don't miss out!</p>
+          <button pButton type="button" label="Shop the Sale"
+                  class="p-button-rounded bg-white text-indigo-600 hover:bg-gray-100"></button>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+          <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+               alt="Summer Sale" class="rounded-xl shadow-lg max-h-80">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">What Our Customers Say</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Don't just take our word for it - hear from our satisfied customers.</p>
+      </div>
+
+      <p-carousel [value]="testimonials" [numVisible]="3" [numScroll]="1" [circular]="true"
+                 [responsiveOptions]="responsiveOptions" styleClass="custom-testimonial-carousel">
+        <ng-template let-testimonial pTemplate="item">
+          <div class="bg-gray-50 p-6 rounded-xl m-2">
+            <div class="flex items-center mb-4">
+              <p-rating [ngModel]="testimonial.rating" [readonly]="true" [stars]="5"></p-rating>
+            </div>
+            <p class="text-gray-600 mb-6">"{{testimonial.comment}}"</p>
+            <div class="flex items-center">
+              <img [src]="testimonial.image" [alt]="testimonial.name" class="w-10 h-10 rounded-full mr-3">
+              <div>
+                <h4 class="font-medium text-gray-800">{{testimonial.name}}</h4>
+                <p class="text-sm text-gray-500">{{testimonial.status}}</p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Stay Updated</h2>
+        <p class="text-gray-600 mb-8">Subscribe to our newsletter for the latest products, exclusive offers, and more.</p>
+        <div class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+          <input type="email" pInputText placeholder="Enter your email" #newsletterInput
+                 class="flex-grow px-4 py-3 rounded-full border border-gray-300 focus:border-indigo-500">
+          <button pButton type="button" label="Subscribe"
+                  class="p-button-rounded bg-indigo-600 hover:bg-indigo-700"
+                  (click)="subscribeNewsletter(newsletterInput.value)"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <!-- Column 1 -->
+        <div>
+          <h3 class="text-xl font-bold mb-4 flex items-center">
+            <i class="pi pi-bolt mr-2"></i> NEXUS
+          </h3>
+          <p class="text-gray-400 mb-4">Your one-stop shop for premium products and exceptional service.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white"><i class="pi pi-facebook"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="pi pi-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="pi pi-instagram"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="pi pi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <!-- Column 2 -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Shop</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3 -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Customer Service</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">My Account</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Order Tracking</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Wishlist</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Shipping Info</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Returns & Exchanges</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4 -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li class="flex items-start">
+              <i class="pi pi-map-marker mt-1 mr-3"></i>
+              <span>123 Commerce Street, Business City, BC 12345</span>
+            </li>
+            <li class="flex items-center">
+              <i class="pi pi-phone mr-3"></i>
+              <span>+1 (555) 123-4567</span>
+            </li>
+            <li class="flex items-center">
+              <i class="pi pi-envelope mr-3"></i>
+              <span>supportnexusshop.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Nexus. All rights reserved.</p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
+            <a href="#" class="text-gray-400 hover:text-white text-sm">Terms of Service</a>
+            <a href="#" class="text-gray-400 hover:text-white text-sm">Cookies Policy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

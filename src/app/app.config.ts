@@ -10,7 +10,7 @@ import {
 } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { httpInterceptor } from './core/interceptors/http.interceptor';
-
+import { MessageService } from 'primeng/api';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
@@ -19,9 +19,13 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
     providePrimeNG({
-        theme: {
-            preset: Aura
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: '.my-app-dark'
         }
-    })
+      }
+    }),
+    MessageService
   ],
 };

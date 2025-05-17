@@ -1,15 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { SidebarComponent } from "../../../shared/sidebar/sidebar.component";
 import { RouterOutlet } from '@angular/router';
 import { NavDashboardComponent } from "../../../shared/nav-dashboard/nav-dashboard.component";
-import { KpiCardsComponent } from "../kpi-cards/kpi-cards.component";
-import { ChartsComponent } from "../charts/charts.component";
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [SidebarComponent, RouterOutlet, NavDashboardComponent, KpiCardsComponent, ChartsComponent],
+  imports: [SidebarComponent, RouterOutlet, NavDashboardComponent],
   templateUrl: './admin-dashboard.component.html',
-  styleUrl: './admin-dashboard.component.css'
+  styleUrl: './admin-dashboard.component.css',
 })
 export class AdminDashboardComponent {
   navigationMenu=[

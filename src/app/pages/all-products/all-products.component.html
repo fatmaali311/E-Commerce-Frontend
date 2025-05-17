@@ -1,0 +1,107 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Category header -->
+  @if (categoryId) {
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold">Products in this category</h1>
+      <a
+        [routerLink]="['/products']"
+        class="text-sm text-indigo-600 hover:underline">
+        ← View all products
+      </a>
+    </div>
+  }
+
+  <!-- All products header -->
+  @if (!categoryId) {
+    <h1 class="text-2xl font-bold mb-6">All Products</h1>
+  }
+
+  <!-- Product grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    @for (product of paginatedProducts; track product._id) {
+      <div class="product-card bg-white rounded-xl overflow-hidden shadow-md transition duration-300 m-2">
+        <div class="relative">
+          <img
+            [src]="product.images[0]"
+            [alt]="product.name"
+            class="w-full h-64 object-cover">
+          <div class="absolute top-3 right-3 flex flex-col space-y-2">
+            <p-button
+              icon="pi pi-heart"
+              styleClass="p-button-rounded p-button-text text-gray-600 bg-white w-8 h-8 flex items-center justify-center">
+            </p-button>
+            <p-button
+              icon="pi pi-eye"
+              (onClick)="viewProduct(product)"
+              styleClass="p-button-rounded p-button-text text-gray-600 bg-white w-8 h-8 flex items-center justify-center">
+            </p-button>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-semibold text-gray-800">{{product.name}}</h3>
+            <div class="flex items-center">
+              <p-rating
+                [ngModel]="product.averageRating || 0"
+                [readonly]="true"
+                [stars]="5">
+              </p-rating>
+              <span class="text-gray-600 text-sm ml-1">
+                {{(product.averageRating || 0).toFixed(1)}}
+              </span>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm mb-3">
+            @if ((product.description || '').length > 100) {
+              {{ product.description | slice:0:100 }}...
+            } @else {
+              {{ product.description }}
+            }
+          </p>
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="text-indigo-600 font-bold">
+                ${{(product.salePrice || product.price || 0).toFixed(2)}}
+              </span>
+              @if (product.salePrice && product.salePrice < product.price) {
+                <span class="text-gray-400 text-sm line-through ml-2">
+                  ${{product.price.toFixed(2)}}
+                </span>
+              }
+            </div>
+            <p-button
+              icon="pi pi-shopping-cart"
+              styleClass="p-button-rounded p-button-text bg-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white w-8 h-8 flex items-center justify-center">
+            </p-button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Pagination -->
+  @if (products.length > 0) {
+    <p-paginator
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[8, 16, 24]"
+      (onPageChange)="onPageChange($event)"
+      styleClass="border-0 mt-4">
+    </p-paginator>
+  }
+
+  <!-- Empty state -->
+  @if (products.length === 0) {
+    <div class="text-center py-12">
+      <p class="text-gray-500">No products found</p>
+      @if (categoryId) {
+        <a
+          [routerLink]="['/products']"
+          class="text-indigo-600 hover:underline mt-2 inline-block">
+          Browse all products
+        </a>
+      }
+    </div>
+  }
+</div>

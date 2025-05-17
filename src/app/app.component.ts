@@ -4,7 +4,7 @@ import { AdminDashboardComponent } from "./dashboard/admin/admin-dashboard/admin
 import { NavDashboardComponent } from './shared/nav-dashboard/nav-dashboard.component';
 @Component({
   selector: 'app-root',
-  imports: [ AdminDashboardComponent, NavDashboardComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

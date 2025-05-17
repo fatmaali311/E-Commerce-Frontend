@@ -11,20 +11,36 @@ import { SellerDashboardComponent } from './dashboard/seller/seller-dashboard/se
 import { ProductsComponent } from './dashboard/seller/products/products.component';
 import { ProfileComponent } from './shared/profile/profile.component';
 import { LogoutComponent } from './shared/logout/logout.component';
-import { HomeComponent } from './feature/pages/home/home.component';
-import { authGuard } from './core/guard/auth.guard';
+import { HomeComponent } from './pages/home/home/home.component';
+import { AboutComponent } from './pages/about/about/about.component';
+import { ContactComponent } from './pages/contact/contact.component';
+import { AllProductsComponent } from './pages/all-products/all-products.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
+import { FeaturedProductsComponent } from './pages/component/featured-products/featured-products.component';
+import { CategoriesComponent } from './pages/component/categories/categories.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
-  {path:'admin/dashboard',component:DashcontentComponent, canActivate: [authGuard]},
-  {path:'admin/users',component:ManageUserComponent, canActivate: [authGuard]},
-  {path:'admin/sellers',component:ManageSellersComponent, canActivate: [authGuard]},
-  {path:'admin/products',component:ManageProductsComponent, canActivate: [authGuard]},
-  {path:'admin/category',component:ManageCategoryComponent, canActivate: [authGuard]},
-  {path:'seller/dashboard',component:SellerDashboardComponent, canActivate: [authGuard]},
-  {path:'seller/products',component:ProductsComponent, canActivate: [authGuard]},
-  {path:'setting/profile',component:ProfileComponent, canActivate: [authGuard]},
-  {path:'setting/logout',component:LogoutComponent, canActivate: [authGuard]},
-  {path:'', component:HomeComponent, canActivate: [authGuard]}
+  {path:'admin/dashboard',component:DashcontentComponent},
+  {path:'admin/users',component:ManageUserComponent},
+  {path:'admin/sellers',component:ManageSellersComponent},
+  {path:'admin/products',component:ManageProductsComponent},
+  {path:'admin/category',component:ManageCategoryComponent},
+  {path:'seller/dashboard',component:SellerDashboardComponent},
+  {path:'seller/products',component:ProductsComponent},
+  {path:'setting/profile',component:ProfileComponent},
+  {path:'setting/logout',component:LogoutComponent},
+   {path:'home',component:HomeComponent},
+   {path:'about',component:AboutComponent},
+   {path:'contact',component:ContactComponent},
+   {path:'products',component:AllProductsComponent},
+   {path:'products/details/:id',component:ProductDetailsComponent},
+    {path:'products/featured',component:FeaturedProductsComponent},
+    {path:'categories',component:CategoriesComponent},
+     { path: 'categories/:categoryId/products',component:AllProductsComponent},
+      {path: 'landing',component: LandingPageComponent},
+  {path: '**',component: LandingPageComponent},
 ];
+

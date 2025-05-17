@@ -1,0 +1,145 @@
+<div *ngIf="loading; else content">
+  <div class="flex justify-center items-center h-64">
+    <p-progressSpinner></p-progressSpinner>
+    <p class="ml-2">Loading product details...</p>
+  </div>
+</div>
+
+<ng-template #content>
+  <div *ngIf="product; else notFound" class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex flex-col lg:flex-row gap-12">
+      <div class="lg:w-7/12">
+        <div class="relative overflow-hidden rounded-lg">
+          <img [src]="mainImage" [alt]="product.name" class="w-full h-auto max-h-[600px] object-contain cursor-zoom-in"
+            (click)="toggleZoom($event)" (mousemove)="zoomed && updateZoomPosition($event)" [style.objectPosition]="zoomed ?
+                 zoomPosition.x + '% ' + zoomPosition.y + '%' : 'center'"
+            [style.transform]="zoomed ? 'scale(2)' : 'scale(1)'" [style.cursor]="zoomed ? 'zoom-out' : 'zoom-in'">
+          <div *ngIf="zoomed" class="absolute inset-0 bg-black bg-opacity-10 pointer-events-none"></div>
+        </div>
+
+        <div class="flex gap-2 mt-4">
+          <div *ngFor="let image of product.images" class="w-16 h-16 border rounded overflow-hidden cursor-pointer"
+            [class.border-blue-500]="mainImage === image" (click)="changeImage(image)">
+            <img [src]="image" [alt]="product.name" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </div>
+      <div class="lg:w-5/12">
+        <h1 class="text-3xl font-bold mb-4">{{product.name}}</h1>
+
+        <!-- Price Section -->
+        <div class="mb-6">
+          <div class="flex items-center gap-4">
+            <span class="text-2xl font-bold text-gray-900">
+              {{(product.salePrice || product.price) | currency}}
+            </span>
+            <span *ngIf="product.salePrice" class="text-lg line-through text-gray-500">
+              {{product.price | currency}}
+            </span>
+            <span *ngIf="product.salePrice" class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">
+              Save {{getDiscountPercentage()}}%
+            </span>
+          </div>
+          <div class="flex items-center gap-2 mt-2">
+            <p-rating [(ngModel)]="product.averageRating" [readonly]="true"></p-rating>
+            <span class="text-gray-600">({{getReviewCount()}} reviews)</span>
+          </div>
+        </div>
+
+        <!-- Color Selection -->
+        <div class="mb-6" *ngIf="availableColors.length">
+          <h3 class="text-lg font-medium mb-2">Color</h3>
+          <div class="flex flex-wrap gap-2">
+            <p-chip *ngFor="let color of availableColors" [label]="color" [styleClass]="selectedColor === color ?
+                    'bg-gray-900 text-white border-gray-900' :
+                    'bg-white text-gray-900 border-gray-300'" styleClass="border cursor-pointer"
+              (click)="selectColor(color)">
+            </p-chip>
+          </div>
+        </div>
+
+        <!-- Add to Cart Section -->
+        <div class="mb-8 border-t border-b border-gray-200 py-6">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="flex items-center border border-gray-300 rounded-md">
+              <button (click)="decrementQuantity()" class="px-3 py-2 text-lg hover:bg-gray-100">-</button>
+              <span class="px-4 py-2 border-x border-gray-300 w-12 text-center">{{quantity}}</span>
+              <button (click)="incrementQuantity()" class="px-3 py-2 text-lg hover:bg-gray-100">+</button>
+            </div>
+            <p-button label="Add to Cart" (click)="addToCart()"
+              styleClass="p-button-lg bg-gray-900 hover:bg-gray-700 border-gray-900"
+              [disabled]="!product.stock.isInstock">
+            </p-button>
+          </div>
+        </div>
+
+        <!-- Stock Status -->
+        <div class="mb-6">
+          <div class="flex items-center">
+            <p-tag [severity]="product.stock.isInstock ? 'success' : 'danger'"
+              [value]="product.stock.isInstock ? 'In Stock' : 'Out of Stock'">
+            </p-tag>
+            <span *ngIf="product.stock?.isInstock" class="text-sm text-gray-600 ml-2">
+              ({{product.stock.quantity}} available)
+            </span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-2">
+          <button pButton [icon]="isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'" [class.text-red-500]="isFavorite"
+            (click)="toggleFavorite()" class="p-button-text"></button>
+          <button pButton label="Buy Now" (click)="buyNow()" class="p-button-outlined"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details Tabs -->
+    <div class="mt-12">
+      <p-tabView>
+        <p-tabPanel header="Description">
+          <p>{{product.description}}</p>
+        </p-tabPanel>
+        <p-tabPanel header="Specifications">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="text-lg font-medium mb-3">General</h3>
+              <div class="space-y-2">
+                <p><strong>Weight:</strong> {{product.specifications.weight || 'N/A'}}</p>
+                <p><strong>Dimensions:</strong> {{product.specifications.dimensions || 'N/A'}}</p>
+                <p><strong>Color:</strong> {{product.specifications.color || 'N/A'}}</p>
+                <p><strong>Material:</strong> {{product.specifications.material || 'N/A'}}</p>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-medium mb-3">Technical</h3>
+              <div class="space-y-2">
+                <p><strong>SKU:</strong> {{product.sku || 'N/A'}}</p>
+                <ng-container *ngIf="product.specifications?.other as otherSpecs">
+                  <p *ngIf="otherSpecs.display"><strong>Display:</strong> {{otherSpecs.display}}</p>
+                  <p *ngIf="otherSpecs.chip"><strong>Processor:</strong> {{otherSpecs.chip}}</p>
+                  <p *ngIf="otherSpecs.storage"><strong>Storage:</strong> {{otherSpecs.storage}}</p>
+                  <p *ngIf="otherSpecs.battery"><strong>Battery:</strong> {{otherSpecs.battery}}</p>
+                  <p *ngIf="otherSpecs.warranty"><strong>Warranty:</strong> {{otherSpecs.warranty}}</p>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+
+  <ng-template #notFound>
+    <div class="container mx-auto px-4 py-8">
+      <p-card *ngIf="error" severity="error">
+        <p>{{error}}</p>
+        <p-button label="Try Again" (click)="loadProduct()"></p-button>
+      </p-card>
+      <p-card *ngIf="!error && !loading">
+        <p>Product not found</p>
+        <p-button label="Back to Shop" (click)="navigateToHome()"></p-button>
+      </p-card>
+    </div>
+  </ng-template>
+</ng-template>

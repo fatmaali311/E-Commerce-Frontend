@@ -1,1 +1,92 @@
-<p>manage-user works!</p>
+<div class="h-full flex flex-col">
+  <div class="p-4 flex-shrink-0">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-2xl font-semibold text-gray-800">User Management</h1>
+    </div>
+  </div>
+
+  <div class="flex-grow overflow-auto">
+    <p-toast></p-toast>
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+    <!-- Loading spinner -->
+    <div *ngIf="loading" class="flex justify-center items-center p-6 h-full">
+      <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="4"
+        fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+    </div>
+
+    <div class="card h-full" *ngIf="!loading">
+      <p-table #dt [value]="users" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['firstName', 'lastName', 'email', 'role']" [rowHover]="true" dataKey="_id"
+        [rowsPerPageOptions]="[5, 10, 25]" styleClass="p-datatable-gridlines" responsiveLayout="scroll">
+        <ng-template pTemplate="caption">
+          <div class="flex justify-start items-center">
+            <p-iconfield>
+              <p-inputicon styleClass="pi pi-search" />
+              <input type="text" pInputText #filter (input)="dt.filterGlobal(filter.value, 'contains')"
+                placeholder="Search users..." />
+            </p-iconfield>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Image</th>
+            <th pSortableColumn="firstName">First Name <p-sortIcon field="firstName"></p-sortIcon></th>
+            <th pSortableColumn="lastName">Last Name <p-sortIcon field="lastName"></p-sortIcon></th>
+            <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+            <th pSortableColumn="phoneNumber">Phone <p-sortIcon field="phoneNumber"></p-sortIcon></th>
+            <th pSortableColumn="role">Role <p-sortIcon field="role"></p-sortIcon></th>
+            <th pSortableColumn="isActive">Status <p-sortIcon field="isActive"></p-sortIcon></th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <td>
+              <img [src]="user.profileImage || 'https://placehold.co/200x200.png'" alt="Profile"
+                class="w-10 h-10 rounded-full object-cover">
+            </td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phoneNumber }}</td>
+            <td>
+              <span class="px-2 py-1 rounded text-xs font-medium" [ngClass]="{
+              'bg-blue-100 text-blue-800': user.role === 'client',
+              'bg-green-100 text-green-800': user.role === 'seller',
+            }">
+                {{ user.role | titlecase }}
+              </span>
+            </td>
+            <td>
+              <p-tag [severity]="getSeverity(user.isActive)" [value]="user.isActive ? 'Active' : 'Inactive'"></p-tag>
+            </td>
+            <td class="flex gap-2">
+              <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info p-button-sm"
+                (click)="viewUser(user)"></button>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning p-button-sm"
+                (click)="editUser(user)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-sm"
+                (click)="deleteUser(user)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8" class="text-center p-4">No users found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!-- User View Dialog -->
+    <app-user-detail-dialog [visible]="viewDialog" [user]="selectedUser" (onHide)="hideDialog()">
+    </app-user-detail-dialog>
+
+    <!-- User Edit Dialog -->
+    <app-user-edit-dialog [visible]="editDialog" [user]="selectedUser" (onHide)="hideDialog()"
+      (onSave)="onUserUpdated($event)">
+    </app-user-edit-dialog>
+  </div>
+</div>
