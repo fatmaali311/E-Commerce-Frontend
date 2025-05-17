@@ -18,6 +18,7 @@ import { AllProductsComponent } from './pages/all-products/all-products.componen
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { FeaturedProductsComponent } from './pages/component/featured-products/featured-products.component';
 import { CategoriesComponent } from './pages/component/categories/categories.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -39,4 +40,7 @@ export const routes: Routes = [
     {path:'products/featured',component:FeaturedProductsComponent},
     {path:'categories',component:CategoriesComponent},
      { path: 'categories/:categoryId/products',component:AllProductsComponent},
+      {path: 'landing',component: LandingPageComponent},
+  {path: '**',component: LandingPageComponent},
 ];
+

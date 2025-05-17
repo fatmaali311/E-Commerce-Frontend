@@ -103,4 +103,5 @@ export class ContactComponent {
         'You can reach our customer service team 24/7 via email at support@nexusshop.com or by phone during business hours at +1 (555) 123-4567.',
     },
   ];
+
 }
