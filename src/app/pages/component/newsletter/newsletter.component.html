@@ -1,0 +1,18 @@
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <p-toast></p-toast>
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">Stay Updated</h2>
+      <p class="text-gray-600 mb-8">Subscribe to our newsletter for the latest products, exclusive offers, and more.</p>
+      <div class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+        <input type="email" pInputText placeholder="Enter your email" [(ngModel)]="email"
+          class="flex-grow px-4 py-3 rounded-full border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+          [disabled]="isSubmitting" (keyup.enter)="subscribeNewsletter()">
+        <button pButton type="button" label="{{ isSubmitting ? 'Subscribing...' : 'Subscribe' }}"
+          class="p-button-rounded bg-indigo-600 hover:bg-indigo-700 transition-colors" [disabled]="isSubmitting"
+          (click)="subscribeNewsletter()"></button>
+      </div>
+      <p class="text-sm text-gray-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+    </div>
+  </div>
+</section>

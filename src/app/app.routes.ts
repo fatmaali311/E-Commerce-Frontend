@@ -21,15 +21,21 @@ import { CategoriesComponent } from './pages/component/categories/categories.com
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
 export const routes: Routes = [
-  {path:'login',component:LoginComponent},
-  {path:'register',component:RegisterComponent},
-  {path:'admin/dashboard',component:DashcontentComponent},
-  {path:'admin/users',component:ManageUserComponent},
-  {path:'admin/sellers',component:ManageSellersComponent},
-  {path:'admin/products',component:ManageProductsComponent},
+  {path:'login',loadComponent:() => import('./core/pages/login/login.component').then(c => c.LoginComponent)},
+  {path:'register',loadComponent:() => import('./core/pages/register/register.component').then(c => c.RegisterComponent)},
+
+
+  {path:'admin/dashboard',loadComponent:() => import('./dashboard/admin/admin-dashboard/admin-dashboard.component').then(c => c.AdminDashboardComponent)},
+  {path:'admin/users',loadComponent:() => import('./dashboard/admin/manage-user/manage-user.component').then(c => c.ManageUserComponent)},
+  {path:'admin/sellers',loadComponent:() => import('./dashboard/admin/manage-sellers/manage-sellers.component').then(c => c.ManageSellersComponent)},
+  {path:'admin/products',loadComponent:() => import('./dashboard/admin/manage-products/manage-products.component').then(c => c.ManageProductsComponent)},
   {path:'admin/category',component:ManageCategoryComponent},
+
+
   {path:'seller/dashboard',component:SellerDashboardComponent},
   {path:'seller/products',component:ProductsComponent},
+
+
   {path:'setting/profile',component:ProfileComponent},
   {path:'setting/logout',component:LogoutComponent},
    {path:'home',component:HomeComponent},

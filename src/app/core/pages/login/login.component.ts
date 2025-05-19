@@ -38,7 +38,12 @@ export class LoginComponent {
           console.log(res);
           localStorage.setItem('token', res.data.token)
           this._AuthService.saveUser()
-          this._Router.navigate(['/'])
+          if(res.data.role==='admin')
+          this._Router.navigate(['/admin/dashboard'])
+          else if(res.data.role==='seller')
+           this._Router.navigate(['/seller/dashboard'])
+          else
+          this._Router.navigate(['/home'])
         },
         error:(err)=>{
           console.log(err.error.message);

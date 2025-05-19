@@ -1,0 +1,31 @@
+<section class="testimonial-section py-16 bg-white">
+  <div class="testimonial-container container mx-auto px-4">
+    <div class="testimonial-header text-center mb-12">
+      <h2 class="testimonial-title text-3xl font-bold text-gray-800 mb-2">What Our Customers Say</h2>
+      <p class="testimonial-subtitle text-gray-600 max-w-2xl mx-auto">Don't just take our word for it - hear from our satisfied customers.</p>
+    </div>
+
+    <div class="testimonial-carousel-wrapper">
+      <p-carousel [value]="testimonials" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="5000"
+        [responsiveOptions]="responsiveOptions" styleClass="testimonial-carousel">
+        <ng-template let-testimonial pTemplate="item">
+          <div class="testimonial-card bg-gray-50 p-6 rounded-xl m-2 h-full flex flex-col">
+            <div class="testimonial-rating flex items-center mb-4">
+              <p-rating [(ngModel)]="testimonial.rating" [readonly]="true" [stars]="5"></p-rating>
+              <span class="testimonial-rating-value ml-2 text-yellow-500 font-medium">{{ testimonial.rating }}</span>
+            </div>
+            <p class="testimonial-text text-gray-600 mb-6 flex-grow">"{{ testimonial.comment }}"</p>
+            <div class="testimonial-author flex items-center mt-auto">
+              <img [src]="testimonial.image" [alt]="testimonial.name + ' testimonial'"
+                class="testimonial-avatar w-12 h-12 rounded-full mr-4 object-cover" width="48" height="48">
+              <div class="testimonial-author-info">
+                <h4 class="testimonial-name font-medium text-gray-800">{{ testimonial.name }}</h4>
+                <p class="testimonial-status text-sm text-gray-500">{{ testimonial.status }}</p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+</section>
