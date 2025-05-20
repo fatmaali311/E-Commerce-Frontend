@@ -1,8 +1,14 @@
 <app-sale-bar></app-sale-bar>
 <app-nav-bar></app-nav-bar>
+@if (!isLogin) {
+  <app-content1></app-content1>
+}
 
-<app-content1></app-content1>
-<app-categories></app-categories>
+<!-- <app-categories></app-categories> -->
 <!-- <app-featured-products></app-featured-products> -->
-<app-newsletter></app-newsletter>
-<!-- <app-footer></app-footer> -->
+<!-- <app-newsletter></app-newsletter> -->
+ <app-footer></app-footer>
+
+
+
+

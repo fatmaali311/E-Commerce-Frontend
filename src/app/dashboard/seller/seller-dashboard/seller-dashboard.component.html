@@ -1,9 +1,9 @@
 <div class="flex h-screen overflow-hidden bg-gray-50">
   <!-- Sidebar -->
-  <app-sidebar [navigationMenu]="navigationMenu" class="fixed inset-y-0 left-0 z-30"></app-sidebar>
+  <app-sidebar [navigationMenu]="navigationMenu" [role]='role' class="fixed inset-y-0 left-0 z-30"></app-sidebar>
   <div class="flex-1 flex flex-col overflow-hidden ml-64">
     <!-- Top Navigation -->
-    <app-nav-dashboard></app-nav-dashboard>
+    <!-- <app-nav-dashboard></app-nav-dashboard> -->
 
     <!-- Content Area -->
     <div class="overflow-auto">
@@ -15,3 +15,4 @@
   </div>
 </div>
 </div>
+

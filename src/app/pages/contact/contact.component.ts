@@ -14,6 +14,9 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { FooterComponent } from '../../elements/footer/footer.component';
+import { NavBarComponent } from '../../elements/nav-bar/nav-bar.component';
+import { SaleBarComponent } from '../../elements/sale-bar/sale-bar.component';
 
 @Component({
   selector: 'app-contact',
@@ -28,6 +31,7 @@ import { ToastModule } from 'primeng/toast';
     ReactiveFormsModule,
     ToastModule,
     AccordionModule,
+    FooterComponent, NavBarComponent, SaleBarComponent
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',

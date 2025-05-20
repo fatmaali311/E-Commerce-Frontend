@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CarouselModule } from 'primeng/carousel';
 import { MenubarModule } from 'primeng/menubar';
@@ -13,6 +13,10 @@ import { DecimalPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../../shared/header/header/header.component';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { Router } from '@angular/router';
+import { NavBarComponent } from '../../../elements/nav-bar/nav-bar.component';
+import { SaleBarComponent } from '../../../elements/sale-bar/sale-bar.component';
 interface Product {
   id: number;
   name: string;
@@ -41,8 +45,9 @@ interface Testimonial {
 }
 @Component({
   selector: 'app-home',
-  imports: [FormsModule,
-   
+  imports: [
+    FormsModule,
+
     MenubarModule,
     ButtonModule,
     BadgeModule,
@@ -51,7 +56,7 @@ interface Testimonial {
     AvatarModule,
     InputTextModule,
     TagModule,
-  FormsModule,
+    FormsModule,
     CarouselModule,
     MenubarModule,
     ButtonModule,
@@ -62,19 +67,18 @@ interface Testimonial {
     InputTextModule,
     TagModule,
     CommonModule,
-    HeaderComponent
-
+    HeaderComponent,
+    NavBarComponent, SaleBarComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
-   encapsulation: ViewEncapsulation.None,
-   standalone: true,
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
 })
-
-
-
-export class HomeComponent {
- title = 'nexus-ecommerce';
+export class HomeComponent implements OnInit {
+  title = 'nexus-ecommerce';
+  _AuthService = inject(AuthService);
+  _Router = inject(Router);
 
   // Header Data
   menuItems: MenuItem[] = [];
@@ -87,23 +91,23 @@ export class HomeComponent {
     {
       name: 'Fashion',
       icon: 'pi pi-shopping-bag',
-      items: 200
+      items: 200,
     },
     {
       name: 'Electronics',
       icon: 'pi pi-desktop',
-      items: 150
+      items: 150,
     },
     {
       name: 'Home Decor',
       icon: 'pi pi-home',
-      items: 180
+      items: 180,
     },
     {
       name: 'Sports',
       icon: 'pi pi-heart-fill',
-      items: 120
-    }
+      items: 120,
+    },
   ];
 
   // Featured Products
@@ -111,22 +115,24 @@ export class HomeComponent {
     {
       id: 1,
       name: 'Nike Air Max',
-      description: 'Men\'s Running Shoes',
+      description: "Men's Running Shoes",
       price: 129.99,
       originalPrice: 159.99,
       discount: '-20%',
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      image:
+        'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
       rating: 4.8,
-      isFavorite: false
+      isFavorite: false,
     },
     {
       id: 2,
       name: 'Smart Watch',
       description: 'Fitness Tracker with Heart Rate',
       price: 199.99,
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1099&q=80',
+      image:
+        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1099&q=80',
       rating: 4.5,
-      isFavorite: false
+      isFavorite: false,
     },
     {
       id: 3,
@@ -134,19 +140,21 @@ export class HomeComponent {
       description: 'Noise Cancelling Bluetooth',
       price: 179.99,
       isNew: true,
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      image:
+        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
       rating: 4.9,
-      isFavorite: false
+      isFavorite: false,
     },
     {
       id: 4,
       name: 'Smartphone Pro',
       description: '128GB Storage, 8GB RAM',
       price: 899.99,
-      image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80',
+      image:
+        'https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80',
       rating: 4.7,
-      isFavorite: false
-    }
+      isFavorite: false,
+    },
   ];
 
   // Testimonials
@@ -154,24 +162,27 @@ export class HomeComponent {
     {
       name: 'Sarah Johnson',
       rating: 5,
-      comment: 'The quality of the products exceeded my expectations. Fast shipping and excellent customer service. Will definitely shop here again!',
+      comment:
+        'The quality of the products exceeded my expectations. Fast shipping and excellent customer service. Will definitely shop here again!',
       image: 'https://randomuser.me/api/portraits/women/44.jpg',
-      status: 'Verified Buyer'
+      status: 'Verified Buyer',
     },
     {
       name: 'Michael Chen',
       rating: 5,
-      comment: 'I\'ve ordered multiple times from this store and I\'m always impressed with their selection and service. Highly recommend!',
+      comment:
+        "I've ordered multiple times from this store and I'm always impressed with their selection and service. Highly recommend!",
       image: 'https://randomuser.me/api/portraits/men/32.jpg',
-      status: 'Verified Buyer'
+      status: 'Verified Buyer',
     },
     {
       name: 'Emily Rodriguez',
       rating: 4.5,
-      comment: 'Great prices and fast delivery. The product was exactly as described. Customer support was very helpful when I had questions.',
+      comment:
+        'Great prices and fast delivery. The product was exactly as described. Customer support was very helpful when I had questions.',
       image: 'https://randomuser.me/api/portraits/women/68.jpg',
-      status: 'Verified Buyer'
-    }
+      status: 'Verified Buyer',
+    },
   ];
 
   // Responsive options for carousels
@@ -179,22 +190,36 @@ export class HomeComponent {
     {
       breakpoint: '1024px',
       numVisible: 3,
-      numScroll: 3
+      numScroll: 3,
     },
     {
       breakpoint: '768px',
       numVisible: 2,
-      numScroll: 2
+      numScroll: 2,
     },
     {
       breakpoint: '560px',
       numVisible: 1,
-      numScroll: 1
-    }
+      numScroll: 1,
+    },
   ];
 
   ngOnInit() {
     this.initMenus();
+    this.loginValidation();
+  }
+  loginValidation(): void {
+    this._AuthService.userInfo.subscribe({
+      next: (res) => {
+        console.log("user's token: ", res);
+        if (res == null || res == undefined) {
+          this._Router.navigate(['']);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   initMenus() {
@@ -202,7 +227,7 @@ export class HomeComponent {
     this.menuItems = [
       {
         label: 'Home',
-        routerLink: ['/']
+        routerLink: ['/'],
       },
       {
         label: 'Shop',
@@ -210,24 +235,24 @@ export class HomeComponent {
           { label: 'All Products' },
           { label: 'New Arrivals' },
           { label: 'Best Sellers' },
-          { label: 'Sale Items' }
-        ]
+          { label: 'Sale Items' },
+        ],
       },
       {
         label: 'About',
-        routerLink: ['/about']
+        routerLink: ['/about'],
       },
       {
         label: 'Contact',
-        routerLink: ['/contact']
-      }
+        routerLink: ['/contact'],
+      },
     ];
 
     // User menu items
     this.userMenuItems = [
       { label: 'Login', icon: 'pi pi-sign-in' },
       { label: 'Register', icon: 'pi pi-user-plus' },
-      { label: 'Account', icon: 'pi pi-user' }
+      { label: 'Account', icon: 'pi pi-user' },
     ];
   }
 

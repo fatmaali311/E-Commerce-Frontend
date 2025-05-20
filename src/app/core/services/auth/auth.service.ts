@@ -13,9 +13,9 @@ export class AuthService {
     })
   }
 
-  _httpClient= inject(HttpClient);
+  _httpClient=inject(HttpClient);
  _Router=inject(Router)
-  userInfo: BehaviorSubject<string|null>=new BehaviorSubject<string|null>('')
+  userInfo: BehaviorSubject<any|null>=new BehaviorSubject<string|null>('')
   register(info:Auth): Observable<any> {
     return this._httpClient.post('http://localhost:3000/api/auth/signup', info);
   };
@@ -25,10 +25,14 @@ export class AuthService {
   saveUser(){
     this.userInfo.next(localStorage.getItem('token'))
   }
-  logOut(){
-    localStorage.removeItem('token')
-    this._Router.navigate(['/login'])
+  getRole():Observable<any>{
+    return this._httpClient.get('http://localhost:3000/api/auth/role')
   }
+   logOut(){
+   localStorage.removeItem('token')
+    window.location.href = '/login';
+  }
+
 
 }
 

@@ -4,9 +4,14 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { TimelineModule } from 'primeng/timeline';
+import { FooterComponent } from '../../../elements/footer/footer.component';
+import { NavBarComponent } from '../../../elements/nav-bar/nav-bar.component';
+import { SaleBarComponent } from '../../../elements/sale-bar/sale-bar.component';
 @Component({
   selector: 'app-about',
-imports: [CommonModule , CardModule, DividerModule, ButtonModule,TimelineModule],
+imports: [CommonModule , CardModule, DividerModule, ButtonModule,TimelineModule,
+  FooterComponent, NavBarComponent, SaleBarComponent
+],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })

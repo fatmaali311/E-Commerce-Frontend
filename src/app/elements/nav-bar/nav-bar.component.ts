@@ -20,7 +20,7 @@ export class NavBarComponent {
   imgURL: string = '/logo.png';
     _AuthService=inject(AuthService)
   isLogin:Boolean=false
-  ngOnInit(): void {
+  constructor(){
       this._AuthService.userInfo.subscribe({
         next: (res)=>{
           console.log("user's token: ", res)

@@ -1,11 +1,15 @@
 <div class="flex items-center justify-between p-4 bg-white shadow-sm relative z-10" >
   <div class="flex items-center gap-2">
     <h1 class="text-xl font-bold text-gray-800">Inventory Title</h1>
-    @if (isLogin) {
-       <ul>
+       <ul class="flex items-center gap-4">
     <li class=""><a routerLink="/" class="text-white-500 font-semibold text-xl">Home</a></li>
-    </ul>
-    }
+    <!-- <li class=""><a routerLink="products" class="text-white-500 font-semibold text-xl">Products</a></li>
+    <li class=""><a routerLink="categories" class="text-white-500 font-semibold text-xl">Categories</a></li> -->
+          <li class=""><a routerLink="/about" class="text-white-500 font-semibold text-xl">About</a></li>
+    <li class=""><a routerLink="/contact" class="text-white-500 font-semibold text-xl">Contact</a></li>
+
+  </ul>
+
 
   </div>
 
@@ -32,7 +36,6 @@
   </div>
 </div>
 
-<router-outlet></router-outlet>
 
 <!-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 <nav class="bg-white dark:bg-gray-800 antialiased">

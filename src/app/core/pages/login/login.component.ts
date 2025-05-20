@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -10,11 +10,11 @@ import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, CardModule,ButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, CardModule,ButtonModule, ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   _AuthService= inject(AuthService)
   _Router =inject (Router)
   apiError:string='';
@@ -22,16 +22,10 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)] ),
   })
-
-  passwordMatchValidator(formGroup: any): { [key: string]: boolean } | null {
-    const password = formGroup.get('password');
-    const confirmPassword = formGroup.get('confirmPassword');
-    return password && confirmPassword && password.value !== confirmPassword.value
-      ? { passwordsMismatch: true }
-      : null;
+  ngOnInit(): void {
+      this.logoutValidation()
   }
   login(){
-    console.log(this.loginForm.value);
     if(this.loginForm.valid){
       this._AuthService.login(this.loginForm.value).subscribe({
         next:(res)=>{
@@ -56,5 +50,17 @@ export class LoginComponent {
     }else{
       this.loginForm.markAllAsTouched()
     }
+  }
+  logoutValidation(){
+    return this._AuthService.userInfo.subscribe({
+      next:(res)=>{
+        console.log("user's token: ", res)
+        if(res!==null&&res!==undefined){
+          this._Router.navigate(['./home'])
+        }
+      },
+      error:(err)=> console.log(err)
+
+    })
   }
 }
